@@ -276,6 +276,25 @@ function draw(){
         ctx.restore();
         ctx.restore();
 
+
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            const touch = e.touches[0];
+
+            ctx.beginPath();
+            ctx.strokeStyle = "rgba(28, 28, 28, 0.5)";      
+            ctx.lineWidth = 2;
+            ctx.arc(touch.pageX, touch.pageY , EnemySenseOfSmell, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.fillStyle = "rgba(72,72,72,0.1)";
+            ctx.arc(touch.pageX, touch.pageY, EnemySenseOfSmell, 0, Math.PI * 2);
+            ctx.closePath();
+            ctx.fill();
+
+        }, {passive: false });
+
+
         if(shaketime != 0) ctx.restore();
     }else if(gameState.state === "gameover"){
         gameover();
@@ -360,15 +379,15 @@ window.addEventListener('touchstart', (e) => {
     e.preventDefault();
     const touch = e.touches[0];
 
-    ctx.beginPath();
-    ctx.strokeStyle = "rgba(255, 0, 0, 0.5)";      
-    ctx.lineWidth = 2;
-    ctx.arc(touch.pageX, touch.pageY , EnemySenseOfSmell, 0, Math.PI * 2);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.fillStyle = "rgba(0,0,255,0.1)";
-    ctx.arc(touch.pageX, touch.pageY, EnemySenseOfSmell, 0, Math.PI * 2);
-    ctx.closePath();
-    ctx.fill();
+    if(gameState.state === "start") gameState.state = "play";
+    if(gameState.state === "gameover"){
+        ctx.clearRect(0, 0, FeeldSize, FeeldSize);
+        gameState.state = "start";
+        player = {x: 0, y: 0, size: PlayerSize, color:"red", deg:"right", speed: 10, state:"walk", stamina:100};
+        food = food;
+        gameState.score = 0;
+        scoreElemant.textContent = "Score: " + gameState.score;
+        frame = 0;
+    }
 
 }, {passive: false });
