@@ -31,6 +31,8 @@ let shaketime = 0;
 let comboCount = 0;
 let comboTimer = 0;
 let grayAmount = 0;
+let fingerDownX = 0;
+let fingerDownY = 0;
 let fingerX = 0;
 let fingerY = 0;
 let isFingerDown = false;
@@ -283,21 +285,28 @@ function draw(){
 
         if(isFingerDown == "true"){
             ctx.beginPath();
-            ctx.strokeStyle = "rgba(247, 1, 1, 1)";      
+            ctx.strokeStyle = "rgba(72, 72, 72, 1)";      
             ctx.lineWidth = 2;
-            ctx.arc(fingerX, fingerY , 50, 0, Math.PI * 2);
+            ctx.arc(fingerDownX, fingerDownY , 50, 0, Math.PI * 2);
             ctx.stroke();
             ctx.beginPath();
-            ctx.fillStyle = "rgba(72,72,72,1)";
-            ctx.arc(fingerX, fingerY, 50, 0, Math.PI * 2);
+            ctx.fillStyle = "rgba(28,28,28,1)";
+            ctx.arc(fingerDownX, fingerDownY, 50, 0, Math.PI * 2);
             ctx.closePath();
             ctx.fill();
-            //console.log("YES");
-        }else{
-            //console.log("NO");
-            //ctx.clearRect(0, 0, FeeldSize, FeeldSize);
+
+            ctx.beginPath();
+            ctx.strokeStyle = "rgba(14, 14, 14, 1)";      
+            ctx.lineWidth = 2;
+            ctx.arc(fingerX, fingerY , 20, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.fillStyle = "rgb(0, 0, 0)";
+            ctx.arc(fingerX, fingerY, 20, 0, Math.PI * 2);
+            ctx.closePath();
+            ctx.fill();
         }
-        console.log(fingerX + "," + fingerY + "." + isFingerDown);
+        //console.log(fingerX + "," + fingerY + "." + isFingerDown);
 
 
         if(shaketime != 0) ctx.restore();
@@ -384,8 +393,8 @@ canvas.addEventListener('touchstart', (e) => {
     e.preventDefault();
     const rect = canvas.getBoundingClientRect();
     const touch = e.touches[0];
-    fingerX = touch.pageX - rect.left;
-    fingerY = touch.pageY - rect.top;
+    fingerDownX = touch.pageX - rect.left;
+    fingerDownY = touch.pageY - rect.top;
     isFingerDown = "true";
 }, {passive: false });
 
