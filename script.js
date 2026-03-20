@@ -285,23 +285,23 @@ function draw(){
 
         if(isFingerDown == "true"){
             ctx.beginPath();
-            ctx.strokeStyle = "rgba(72, 72, 72, 1)";      
+            ctx.strokeStyle = "rgba(72, 72, 72, 0.2)";      
             ctx.lineWidth = 2;
             ctx.arc(fingerDownX, fingerDownY , 50, 0, Math.PI * 2);
             ctx.stroke();
             ctx.beginPath();
-            ctx.fillStyle = "rgba(28,28,28,1)";
+            ctx.fillStyle = "rgba(28,28,28,0.5)";
             ctx.arc(fingerDownX, fingerDownY, 50, 0, Math.PI * 2);
             ctx.closePath();
             ctx.fill();
 
             ctx.beginPath();
-            ctx.strokeStyle = "rgba(14, 14, 14, 1)";      
+            ctx.strokeStyle = "rgba(14, 14, 14, 0.2)";      
             ctx.lineWidth = 2;
             ctx.arc(fingerX, fingerY , 20, 0, Math.PI * 2);
             ctx.stroke();
             ctx.beginPath();
-            ctx.fillStyle = "rgb(0, 0, 0)";
+            ctx.fillStyle = "rgb(0, 0, 0, 0.2)";
             ctx.arc(fingerX, fingerY, 20, 0, Math.PI * 2);
             ctx.closePath();
             ctx.fill();
