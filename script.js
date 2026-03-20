@@ -36,6 +36,7 @@ let fingerDownY = 0;
 let fingerX = 0;
 let fingerY = 0;
 let isFingerDown = false;
+let OperatePlayer = false;
 const scoreElemant = document.getElementById("currentScore");
 const highscoreElemant = document.getElementById("highScore");
 const highComboElemant = document.getElementById("highCombo");
@@ -224,7 +225,7 @@ function draw(){
 
                 if(Math.abs(enemy.x - enemy.PatrolGoalX) < EnemySize && Math.abs(enemy.x - enemy.PatrolGoalX) < EnemySize) enemy.state = "PATROL";
                 if(Math.hypot(enemy.x - player.x, enemy.y - player.y) < EnemySenseOfSmell){
-                    enemy.state = "CHASE";
+                    //enemy.state = "CHASE";
                 }
             }
             if(Math.abs(player.x - enemy.x) < PlayerSize - 5 && Math.abs(player.y - enemy.y) < PlayerSize - 5){     //敵との当たり判定
@@ -295,19 +296,26 @@ function draw(){
             ctx.closePath();
             ctx.fill();
 
+            let vx = fingerX - fingerDownX;
+            let vy = fingerY - fingerDownY;
+            let distance = Math.hypot(vx, vy);
+            if(distance > 50){
+                fingerX = fingerDownX + (50 * vx / distance);
+                fingerY = fingerDownY + (50 * vy / distance);
+            }
+
             ctx.beginPath();
             ctx.strokeStyle = "rgba(14, 14, 14, 0.2)";      
             ctx.lineWidth = 2;
             ctx.arc(fingerX, fingerY , 20, 0, Math.PI * 2);
             ctx.stroke();
             ctx.beginPath();
-            ctx.fillStyle = "rgb(0, 0, 0, 0.2)";
+            ctx.fillStyle = "rgb(0, 0, 0, 1)";
             ctx.arc(fingerX, fingerY, 20, 0, Math.PI * 2);
             ctx.closePath();
             ctx.fill();
+            
         }
-        //console.log(fingerX + "," + fingerY + "." + isFingerDown);
-
 
         if(shaketime != 0) ctx.restore();
     }else if(gameState.state === "gameover"){
