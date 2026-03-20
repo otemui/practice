@@ -280,40 +280,24 @@ function draw(){
         ctx.restore();
 
 
-        canvas.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            const touch = e.touches[0];
-            fingerX = touch.pageX;
-            fingerY = touch.pageY;
-            isFingerDown = "true";
-        }, {passive: false });
-
-        canvas.addEventListener('touchend', (e) => {
-            e.preventDefault();
-            isFingerDown = "false";
-        }, {passive: false });
-
-        canvas.addEventListener('touchmove', (e) => {
-            e.preventDefault();
-            const touch = e.touches[0];
-            fingerX = touch.pageX;
-            fingerY = touch.pageY;
-            //isFingerDown = "true";
-        }, {passive: false });
-
 
         if(isFingerDown == "true"){
             ctx.beginPath();
-            ctx.strokeStyle = "rgba(28, 28, 28, 0.5)";      
+            ctx.strokeStyle = "rgba(247, 1, 1, 1)";      
             ctx.lineWidth = 2;
             ctx.arc(fingerX, fingerY , 50, 0, Math.PI * 2);
             ctx.stroke();
             ctx.beginPath();
-            ctx.fillStyle = "rgba(72,72,72,0.1)";
+            ctx.fillStyle = "rgba(72,72,72,1)";
             ctx.arc(fingerX, fingerY, 50, 0, Math.PI * 2);
             ctx.closePath();
             ctx.fill();
+            //console.log("YES");
+        }else{
+            //console.log("NO");
+            //ctx.clearRect(0, 0, FeeldSize, FeeldSize);
         }
+        console.log(fingerX + "," + fingerY + "." + isFingerDown);
 
 
         if(shaketime != 0) ctx.restore();
@@ -395,6 +379,29 @@ window.addEventListener("keydown", (e) => {
         }
     }
 });
+
+canvas.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+    fingerX = touch.pageX - rect.left;
+    fingerY = touch.pageY - rect.top;
+    isFingerDown = "true";
+}, {passive: false });
+
+canvas.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    isFingerDown = "false";
+}, {passive: false });
+
+canvas.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+    fingerX = touch.pageX - rect.left;
+    fingerY = touch.pageY - rect.top;
+    //isFingerDown = "true";
+}, {passive: false });
 
 window.addEventListener('touchstart', (e) => {
     e.preventDefault();
