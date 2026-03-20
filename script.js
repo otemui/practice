@@ -162,7 +162,7 @@ function draw(){
         ctx.restore();
 
         enemies.forEach((enemy) => {        //敵のもろもろ　ミミズ馬
-            console.log(enemy.state);
+            //console.log(enemy.state);
             ctx.beginPath();
             if (enemy.state === "CHASE"){
                 ctx.strokeStyle = "rgba(255, 0, 0, 0.5)";
@@ -355,3 +355,20 @@ window.addEventListener("keydown", (e) => {
         }
     }
 });
+
+window.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    const touch = e.touches[0];
+
+    ctx.beginPath();
+    ctx.strokeStyle = "rgba(255, 0, 0, 0.5)";      
+    ctx.lineWidth = 2;
+    ctx.arc(touch.pageX, touch.pageY , EnemySenseOfSmell, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.fillStyle = "rgba(0,0,255,0.1)";
+    ctx.arc(touch.pageX, touch.pageY, EnemySenseOfSmell, 0, Math.PI * 2);
+    ctx.closePath();
+    ctx.fill();
+
+}, {passive: false });
