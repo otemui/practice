@@ -304,6 +304,22 @@ function draw(){
                 fingerY = fingerDownY + (50 * vy / distance);
             }
 
+            if (-45 >= Math.asin(vy / distance) * (180 / Math.PI) && Math.acos(vx / distance) * (180 / Math.PI) >= 45){
+                OperatePlayer = "Up"
+            }else if (-45 <= Math.asin(vy / distance) * (180 / Math.PI) && Math.acos(vx / distance) * (180 / Math.PI) <= 45){
+                OperatePlayer = "Right"
+            }else if (45 <= Math.asin(vy / distance) * (180 / Math.PI) && Math.acos(vx / distance) * (180 / Math.PI) >= 45){
+                OperatePlayer = "Down"
+            }else if (45 >= Math.asin(vy / distance) * (180 / Math.PI) && Math.acos(vx / distance) * (180 / Math.PI) >= 135){
+                OperatePlayer = "Left"
+            }else if (-45 >= Math.asin(vy / distance) * (180 / Math.PI) && Math.acos(vx / distance) * (180 / Math.PI) >= 135){
+                OperatePlayer = "Up"
+            }
+            
+            console.log(OperatePlayer);
+            console.log(Math.asin(vy / distance) * (180 / Math.PI));
+            console.log(Math.acos(vx / distance) * (180 / Math.PI));
+
             ctx.beginPath();
             ctx.strokeStyle = "rgba(14, 14, 14, 0.2)";      
             ctx.lineWidth = 2;
@@ -315,6 +331,33 @@ function draw(){
             ctx.closePath();
             ctx.fill();
             
+        }
+        
+        if (OperatePlayer === "Right") {
+            if (shaketime == 0 && player.x < FeeldSize - PlayerSize){
+                player.x = player.x + player.speed * TimeScale;
+                if(player.state === "run") player.stamina = player.stamina - PlayerStaminaCost;
+                player.deg = "right";
+            }       
+        }
+        if (OperatePlayer === "Left") {
+            if (shaketime == 0 && player.x > 0){
+                player.x = player.x - player.speed * TimeScale;
+                if(player.state === "run") player.stamina = player.stamina - PlayerStaminaCost;
+                player.deg = "left";
+            }
+        }
+        if (OperatePlayer === "Up") {
+            if (shaketime == 0 && player.y > 0){
+                player.y = player.y - player.speed * TimeScale;
+                if(player.state === "run") player.stamina = player.stamina - PlayerStaminaCost;
+            }
+        }
+        if (OperatePlayer === "Down"){
+            if (shaketime == 0 && player.y < FeeldSize - PlayerSize){
+                player.y = player.y + player.speed * TimeScale;
+                if(player.state === "run") player.stamina = player.stamina - PlayerStaminaCost;
+            }
         }
 
         if(shaketime != 0) ctx.restore();
@@ -403,12 +446,15 @@ canvas.addEventListener('touchstart', (e) => {
     const touch = e.touches[0];
     fingerDownX = touch.pageX - rect.left;
     fingerDownY = touch.pageY - rect.top;
+    fingerX = touch.pageX - rect.left;
+    fingerY = touch.pageY - rect.top;
     isFingerDown = "true";
 }, {passive: false });
 
 canvas.addEventListener('touchend', (e) => {
     e.preventDefault();
     isFingerDown = "false";
+    OperatePlayer = "false"
 }, {passive: false });
 
 canvas.addEventListener('touchmove', (e) => {
@@ -417,7 +463,7 @@ canvas.addEventListener('touchmove', (e) => {
     const touch = e.touches[0];
     fingerX = touch.pageX - rect.left;
     fingerY = touch.pageY - rect.top;
-    //isFingerDown = "true";
+    
 }, {passive: false });
 
 window.addEventListener('touchstart', (e) => {
