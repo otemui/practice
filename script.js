@@ -31,6 +31,9 @@ let shaketime = 0;
 let comboCount = 0;
 let comboTimer = 0;
 let grayAmount = 0;
+let fingerX = 0;
+let fingerY = 0;
+let isFingerDown = false;
 const scoreElemant = document.getElementById("currentScore");
 const highscoreElemant = document.getElementById("highScore");
 const highComboElemant = document.getElementById("highCombo");
@@ -280,19 +283,37 @@ function draw(){
         canvas.addEventListener('touchstart', (e) => {
             e.preventDefault();
             const touch = e.touches[0];
+            fingerX = touch.pageX;
+            fingerY = touch.pageY;
+            isFingerDown = "true";
+        }, {passive: false });
 
+        canvas.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            isFingerDown = "false";
+        }, {passive: false });
+
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            const touch = e.touches[0];
+            fingerX = touch.pageX;
+            fingerY = touch.pageY;
+            //isFingerDown = "true";
+        }, {passive: false });
+
+
+        if(isFingerDown == "true"){
             ctx.beginPath();
             ctx.strokeStyle = "rgba(28, 28, 28, 0.5)";      
             ctx.lineWidth = 2;
-            ctx.arc(touch.pageX, touch.pageY , EnemySenseOfSmell, 0, Math.PI * 2);
+            ctx.arc(fingerX, fingerY , 50, 0, Math.PI * 2);
             ctx.stroke();
             ctx.beginPath();
             ctx.fillStyle = "rgba(72,72,72,0.1)";
-            ctx.arc(touch.pageX, touch.pageY, EnemySenseOfSmell, 0, Math.PI * 2);
+            ctx.arc(fingerX, fingerY, 50, 0, Math.PI * 2);
             ctx.closePath();
             ctx.fill();
-
-        }, {passive: false });
+        }
 
 
         if(shaketime != 0) ctx.restore();
