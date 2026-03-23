@@ -225,7 +225,7 @@ function draw(){
 
                 if(Math.abs(enemy.x - enemy.PatrolGoalX) < EnemySize && Math.abs(enemy.x - enemy.PatrolGoalX) < EnemySize) enemy.state = "PATROL";
                 if(Math.hypot(enemy.x - player.x, enemy.y - player.y) < EnemySenseOfSmell){
-                    //enemy.state = "CHASE";
+                    enemy.state = "CHASE";
                 }
             }
             if(Math.abs(player.x - enemy.x) < PlayerSize - 5 && Math.abs(player.y - enemy.y) < PlayerSize - 5){     //敵との当たり判定
