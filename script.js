@@ -462,6 +462,7 @@ canvas.addEventListener('touchend', (e) => {
 canvas.addEventListener('touchmove', (e) => {
     e.preventDefault();
     const rect = canvas.getBoundingClientRect();
+    const scale = CanvasPicel / rect.height;
     const touch = e.touches[0];
     fingerX = ( touch.pageX - rect.left ) * scale;
     fingerY = ( touch.pageY - rect.top ) * scale;
