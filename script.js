@@ -37,6 +37,7 @@ let fingerX = 0;
 let fingerY = 0;
 let isFingerDown = false;
 let OperatePlayer = false;
+const CanvasPicel = 400;
 const scoreElemant = document.getElementById("currentScore");
 const highscoreElemant = document.getElementById("highScore");
 const highComboElemant = document.getElementById("highCombo");
@@ -69,9 +70,9 @@ function draw(){
     if(gameState.state === "start"){
         ctx.font = "20px Arial";
         ctx.fillStyle = "black";
-        ctx.fillText("Game STart", FeeldSize / 2, FeeldSize / 2);
+        ctx.fillText("Game Start", FeeldSize / 2, FeeldSize / 2);
         ctx.font = "20px Arial";
-        ctx.fillText("Prease press Enter", FeeldSize / 2, FeeldSize / 2 + 20);
+        ctx.fillText("Please press Enter", FeeldSize / 2, FeeldSize / 2 + 20);
         shaketime = 0;
         enemies = [];
         enemies.push({x: FeeldSize - EnemySize, y: FeeldSize - EnemySize, size:EnemySize, color:"blue", speed: 0.4, deg:"left", state:"CHASE", PatrolGoalX: 0, PatrolGoalY:0});
@@ -443,11 +444,12 @@ window.addEventListener("keydown", (e) => {
 canvas.addEventListener('touchstart', (e) => {
     e.preventDefault();
     const rect = canvas.getBoundingClientRect();
+    const scale = CanvasPicel / rect.height;
     const touch = e.touches[0];
     fingerDownX = touch.pageX - rect.left;
     fingerDownY = touch.pageY - rect.top;
-    fingerX = touch.pageX - rect.left;
-    fingerY = touch.pageY - rect.top;
+    fingerX = ( touch.pageX - rect.left ) * scale;
+    fingerY = ( touch.pageY - rect.top ) * scale;
     isFingerDown = "true";
 }, {passive: false });
 
@@ -461,8 +463,8 @@ canvas.addEventListener('touchmove', (e) => {
     e.preventDefault();
     const rect = canvas.getBoundingClientRect();
     const touch = e.touches[0];
-    fingerX = touch.pageX - rect.left;
-    fingerY = touch.pageY - rect.top;
+    fingerX = ( touch.pageX - rect.left ) * scale;
+    fingerY = ( touch.pageY - rect.top ) * scale;
     
 }, {passive: false });
 

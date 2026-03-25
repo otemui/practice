@@ -5,13 +5,15 @@
 }
 
 #scoreBoard {
-      font-size: 24px;
-      color: black;
+      font-size: 20px;
+      color: white;
+      padding: 20px;
       font-weight: bold;
 }
 
 body {
     margin:0;
+    padding: 0; /*なんだっこれ*/
     display: flex;
     justify-content:center;
     align-items:center;
@@ -21,8 +23,35 @@ body {
     /*flex-direction: column;*/
 }
 
+.game-container{
+    display: flex;
+    flex-direction: row; /*キャンバスとスコアを横に並べる*/
+    justify-content: center;
+    align-items: center;    /*縦に並べたものを中央に*/
+    height: 100dvh;    /*画面からはみ出さないように*/
+    width: 100%;
+    background-color: black;
+}
+
 canvas {
-    background-color: white;
-    height: 100%;
+    height: 100dvh;
     width: auto;
+    aspect-ratio: 1 / 1;
+    background-color: white;
+}
+
+#orientation-warning {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: black; color: white;
+    z-index: 1000;
+    text-align: center;
+    padding-top: 40%;
+}
+
+@media screen and (orientation: portrait) {
+    #orientation-warning {
+        display: block;
+    }
 }
